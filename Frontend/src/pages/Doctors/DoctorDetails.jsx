@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 // import doctorImg from "../../assets/images/doctor-img02.png";
-import starImg from "../../assets/images/star.png";
+import starImg from "../../assets/images/Star.png";
 import DoctorAbout from "./DoctorAbout";
 import Feedback from "./Feedback";
 import SidePanel from "./SidePanel";
