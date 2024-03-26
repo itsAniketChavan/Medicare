@@ -1,5 +1,4 @@
 import { useState } from "react";
-import userImg from "../../assets/images/doctor-img01.png";
 import { useContext } from "react";
 import { authContext } from "../../context/AuthContext";
 import MyBookings from "./MyBookings";
@@ -8,7 +7,7 @@ import useGetProfile from "../../hooks/useFetchData";
 import { BASE_URL } from "../../config";
 import Loading from "../../components/Loader/Loading";
 import Error from "../../components/Error/Error";
-import HashLoader from "react-spinners/HashLoader";
+
 
 
 const MyAccount = () => {

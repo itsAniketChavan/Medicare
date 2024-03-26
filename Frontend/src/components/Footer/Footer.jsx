@@ -8,7 +8,6 @@ import {
   AiOutlineInstagram,
 } from "react-icons/ai";
 
-import f from "../../assets/images/Footer-img.jpg";
 
 const socialLinks = [
   {
