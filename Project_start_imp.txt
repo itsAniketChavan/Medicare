@@ -1,0 +1,11 @@
+## TO START THE PROJECT --
+
+1 -- GO INTO THE BACKEND DIRECTORY -
+
+  -- RUN -- npm run start-dev
+
+2 -- GO TO THE FRONTED DIRECTORY -
+
+  -- RUN -- npm run dev
+   
+3 -- RUN -- npm start
