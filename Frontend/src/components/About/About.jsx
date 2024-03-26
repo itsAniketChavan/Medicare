@@ -1,6 +1,6 @@
 import React from "react";
 import aboutImg from "../../assets/images/about.png";
-import aboutCardImg from "../../assets/images/aboutCardImg.png";
+import aboutCardImg from "../../assets/images/aboutcardImg.png";
 import {Link} from 'react-router-dom';
 
 const About = () => {
