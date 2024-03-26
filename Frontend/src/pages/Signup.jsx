@@ -5,6 +5,7 @@ import uploadImageToCloudinary from "../utilis/uploadCloudinary";
 import { BASE_URL } from "../config";
 import { toast } from "react-toastify";
 import HashLoader from "react-spinners/HashLoader";
+import defaulat from "../assets/images/default.jpg";
 
 const Signup = () => {
   const [selectedFile, setSelectedFfile] = useState(null);
@@ -22,13 +23,13 @@ const Signup = () => {
     role: "patient",
   });
 
-  const handleInputChange = (e) => {
+  const handleInputChange = async(e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+ 
   };
 
   const handleFileInputChange = async (event) => {
     const file = event.target.files[0];
-    //Later we will use cloudnary to upload images
 
     const data = await uploadImageToCloudinary(file);
 
@@ -39,6 +40,7 @@ const Signup = () => {
 
   const submitHandler = async (event) => {
     event.preventDefault();
+   
     setLoading(true);
     try {
       const res = await fetch(`${BASE_URL}/auth/register`, {
@@ -161,6 +163,7 @@ const Signup = () => {
               </div>
 
               <div className="mb-5 flex items-center gap-3">
+                {/* Render user's uploaded photo preview or default image */}
                 {selectedFile && (
                   <figure
                     className="w-[60px] h-[60px] rounded-full border-2 border-solid border-primaryColor 
@@ -176,7 +179,6 @@ const Signup = () => {
 
                 <div className="relative w-[130px] h-[50px]">
                   <input
-                  
                     type="file"
                     name="photo"
                     id="customFile"

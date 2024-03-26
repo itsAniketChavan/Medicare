@@ -26,8 +26,8 @@ const MyAccount = () => {
     dispatch({ type: "LOGOUT" });
     // window.location.reload();
   };
- const deleteAccountHandler = ()=>{
-  console.log("userdata :   ",userData)
+ const deleteAccountHandler = async()=>{
+  
  }
   
 
