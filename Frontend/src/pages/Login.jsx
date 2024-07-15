@@ -4,8 +4,17 @@ import { BASE_URL } from "../config";
 import { toast } from "react-toastify";
 import { authContext } from "../context/AuthContext.jsx";
 import HashLoader from 'react-spinners/HashLoader'
+import ReCAPTCHA from 'react-google-recaptcha'
+import { useRef } from "react"
+ 
+ 
  
 const Login = () => {
+
+  const recaptcha = useRef();
+  const captchKey = import.meta.env.VITE_CAPTCHA_SITE_KEY;
+  console.log(captchKey)
+
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -22,6 +31,14 @@ const Login = () => {
   const submitHandler = async (event) => {
     event.preventDefault();
     setLoading(true);
+
+    const captchaValue = recaptcha.current.getValue()
+    if (!captchaValue) {
+      // alert('Please verify the reCAPTCHA!')
+      toast.error("Please click on captha");
+      setLoading(false);
+      return
+    }
     try {
       const res = await fetch(`${BASE_URL}/auth/login`, {
         method: "post",
@@ -96,6 +113,7 @@ const Login = () => {
               required
             />
           </div>
+          <ReCAPTCHA ref={recaptcha} sitekey={captchKey} />
 
           <div className="mt-7">
             <button
@@ -116,6 +134,7 @@ const Login = () => {
             >
               Register
             </Link>
+            
           </p>
         </form>
       </div>

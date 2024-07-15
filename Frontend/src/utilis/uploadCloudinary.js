@@ -1,7 +1,7 @@
-// const upload_preset = import.meta.env.VITE_UPLOAD_PRESET;
-const upload_preset = "doctor-booking-system";
-// const cloud_name = import.meta.env.VITE_CLOUD_NAME;
-const cloud_name = "aniketchavan";
+const upload_preset = import.meta.env.VITE_UPLOAD_PRESET;
+ 
+const cloud_name = import.meta.env.VITE_CLOUD_NAME;
+ 
 
 
 const uploadImageToCloudinary = async file =>{
