@@ -11,6 +11,7 @@ import Dashboard from "../Dashboard/doctor-account/Dashboard";
 import { Routes, Route } from "react-router-dom";
 import ProtectedRoute from "./ProtectedRoute";
 import CheckoutSuccess from "../pages/Doctors/CheckoutSuccess";
+import Help from "../components/AiChat/Help";
 
 const Routers = () => {
   return (
@@ -24,6 +25,7 @@ const Routers = () => {
       <Route path="/contact" element={<Contact />} />
       <Route path="/services" element={<Services />} />
       <Route path="/map" element={<Map />} />
+      <Route path="/AiChat" element={<Help />} />
       <Route path="/checkout-success" element={<CheckoutSuccess />} />
       <Route
         path="/users/profile/me"

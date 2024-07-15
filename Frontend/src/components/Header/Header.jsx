@@ -23,6 +23,10 @@ const navLinks = [
     path: "/contact",
     display: "contact",
   },
+  {
+    path: "/AiChat",
+    display: "AI Help",
+  },
 ];
 
 const Header = () => {
