@@ -12,6 +12,7 @@ import { Routes, Route } from "react-router-dom";
 import ProtectedRoute from "./ProtectedRoute";
 import CheckoutSuccess from "../pages/Doctors/CheckoutSuccess";
 import Help from "../components/AiChat/Help";
+import AdminProfile from "../Dashboard/Admin/Profile"
 
 const Routers = () => {
   return (
@@ -40,6 +41,15 @@ const Routers = () => {
         element={
           <ProtectedRoute allowedRoles={["doctor"]}>
             <Dashboard />
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/admin/profile"
+        element={
+          <ProtectedRoute allowedRoles={["admin"]}>
+            <AdminProfile />
           </ProtectedRoute>
         }
       />

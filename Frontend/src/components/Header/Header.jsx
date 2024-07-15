@@ -100,24 +100,24 @@ const Header = () => {
 
           <div className="flex items-center gap-4">
   {token && user ? (
-    <div>
-      <Link to={`${role === 'doctor' ? "/doctors/profile/me" : "/users/profile/me"}`}>
-        <div className="flex items-center gap-4">
-          <h2 className="font-bold hover:text-primaryColor">{user?.name}</h2>
-          <figure className="w-[35px] h-[35px] rounded-full cursor-pointer border border-black">
-  <img src={user?.photo} className="w-full rounded-full" alt="" />
-</figure>
-
-        </div>
-      </Link>
-    </div>
-  ) : (
-    <Link to="/login">
-      <button className=" bg-primaryColor w-[100px] h-[40px]  text-white font-[600]  flex items-center
-      justify-center rounded-[100px] hover:bg-blue-800">Login
-      </button>
+  <div>
+    <Link to={`${role === 'doctor' ? "/doctors/profile/me" : role === 'admin' ? "/admin/profile" : "/users/profile/me"}`}>
+      <div className="flex items-center gap-4">
+        <h2 className="font-bold hover:text-primaryColor">{user?.name}</h2>
+        <figure className="w-[35px] h-[35px] rounded-full cursor-pointer border border-black">
+          <img src={user?.photo} className="w-full rounded-full" alt="" />
+        </figure>
+      </div>
     </Link>
-  )}
+  </div>
+) : (
+  <Link to="/login">
+    <button className="bg-primaryColor w-[100px] h-[40px] text-white font-[600] flex items-center justify-center rounded-[100px] hover:bg-blue-800">
+      Login
+    </button>
+  </Link>
+)}
+
   <span className="md:hidden" onClick={toggleMenu}>
     <BiMenu className="w-6 h-6 cursor-pointer" />
   </span>
