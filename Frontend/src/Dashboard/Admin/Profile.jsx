@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useContext } from "react";
 import { authContext } from "../../context/AuthContext";
 import Approve from "./Approve";
+import AllDoctors from "./AllDoctors";
 import useGetProfile from "../../hooks/useFetchData";
 import { BASE_URL } from "../../config";
 import Loading from "../../components/Loader/Loading";
@@ -9,7 +10,7 @@ import Error from "../../components/Error/Error";
 
 const Profile = () => {
   const { dispatch } = useContext(authContext);
-  const [tab, setTab] = useState("bookings");
+  const [tab, setTab] = useState("approvals");
 
   const {
     data: userData,
@@ -17,10 +18,8 @@ const Profile = () => {
     error,
   } = useGetProfile(`${BASE_URL}/admin/profile`);
 
- 
   const handleLogout = () => {
     dispatch({ type: "LOGOUT" });
-    
   };
   const deleteAccountHandler = async () => {};
 
@@ -74,10 +73,38 @@ const Profile = () => {
               </div>
             </div>
 
-            <div className="md:col-span-2 md:px-[30px]">
+            <div className="md:col-span-2 md:px-[10px]">
               <div>
                 <div>
-                  <Approve />
+                  <div className="md:col-span-2 md:px-[30px]">
+                    <div className="py-10">
+                      <button
+                        onClick={() => setTab("approvals")}
+                        className={`${
+                          tab === "approvals"
+                            ? "bg-primaryColor text-white font-normal"
+                            : ""
+                        } p-2 py-2 mr-5 rounded-md text-headingColor font-semibold text-[16px] leading-7 border border-solid border-primaryColor`}
+                      >
+                        Approvals
+                      </button>
+
+                      <button
+                        onClick={() => setTab("Doctors")}
+                        className={`p-2 py-2 mr-5 rounded-md text-headingColor font-semibold text-[16px] leading-7 border border-solid border-primaryColor${
+                          tab === "Doctors"
+                            ? " bg-primaryColor text-white font-normal"
+                            : ""
+                        }`}
+                      >
+                        Docotrs
+                      </button>
+                    </div>
+
+                    {tab == "approvals" && <Approve />}
+                    {tab == "Doctors" && <AllDoctors />}
+                  </div>
+                
                 </div>
               </div>
             </div>

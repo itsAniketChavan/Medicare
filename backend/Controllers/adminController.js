@@ -56,6 +56,30 @@ export const getPendingDoctors = async (req, res) => {
 };
 
 
+export const getAlldoctors = async (req, res) => {
+  try {
+    const pendingDoctors = await Doctor.find({ isApproved: "approved" });
+
+    // if (pendingDoctors.length === 0) {
+    //   return res
+    //     .status(200)
+    //     .json({ success: false, message: "Not pending" });
+    // }
+
+    res.status(200).json({
+      success: true,
+      message: "Approved doctors retrieved successfully",
+      data: pendingDoctors,
+    });
+  } catch (err) {
+    console.error("Error in getAlldocotrs:", err);
+    return res
+      .status(500)
+      .json({ success: false, message: "Something went wrong, cannot retrieve doctors" });
+  }
+};
+
+
 export const updateStatus = async (req, res) => {
   const doctorId   = req.params.id;
   
@@ -85,7 +109,36 @@ export const updateStatus = async (req, res) => {
   } catch (err) {
     console.error("Error in updateStatus:", err);
     return res
-      .status(500)
+      .status(500)  
       .json({ success: false, message: "Something went wrong, cannot update doctor status" });
+  }
+};
+
+export const deleteDoctor = async (req, res) => {
+  const doctorId = req.params.id;
+
+  try {
+    // Find and delete the doctor by ID
+    const doctor = await Doctor.findByIdAndDelete(doctorId);
+
+    // If doctor not found, return a 404 response
+    if (!doctor) {
+      return res.status(404).json({
+        success: false,
+        message: "Doctor not found"
+      });
+    }
+
+    // Return the successful response
+    res.status(200).json({
+      success: true,
+      message: "Doctor deleted successfully"
+    });
+  } catch (err) {
+    console.error("Error in delete:", err);
+    return res.status(500).json({
+      success: false,
+      message: "Something went wrong, cannot delete doctor record"
+    });
   }
 };
