@@ -13,6 +13,8 @@ const Tabs = ({tab, setTab}) => {
   const handleLogout = () =>{
     dispatch({type:'LOGOUT'})
     navigate('/login')
+    window.location.reload();
+    
 
   
   
