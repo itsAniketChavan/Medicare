@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Doctorcard from "../../components/Doctors/DoctorCard";
- import { doctors } from '../../assets/data/doctors';
 import Testimonials from "../../components/Testimonial/Testimonials";
-
 import { BASE_URL } from "../../config/";
 import useFetchData from "../../hooks/useFetchData";
 import Loader from "../../components/Loader/Loading";
@@ -10,26 +8,31 @@ import Error from "../../components/Error/Error";
 
 const Doctors = () => {
   const [query, setQuery] = useState("");
+  const [debounceQuery, setDebounceQuery] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const recordsPerPage = 8;
 
-  const [debouncequery, setDebounceQuery] = useState("")
+  const handleSearch = () => {
+    setQuery(query.trim());
+  };
 
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setDebounceQuery(query);
+    }, 700);
+    return () => clearTimeout(timeout);
+  }, [query]);
 
-  const handleSearch = () =>{
-    setQuery(query.trim())
-    console.log("Handle Search")
-  }
+  const { data: doctors, loading, error } = useFetchData(`${BASE_URL}/doctors?query=${debounceQuery}`);
 
-  useEffect(()=>{
+  const indexOfLastDoctor = currentPage * recordsPerPage;
+  const indexOfFirstDoctor = indexOfLastDoctor - recordsPerPage;
+  const currentDoctors = doctors.slice(indexOfFirstDoctor, indexOfLastDoctor);
+  const totalPages = Math.ceil(doctors.length / recordsPerPage);
 
-    const timeout = setTimeout(()=>{
-
-      setDebounceQuery(query)
-    },700)
-
-    return ()=>clearTimeout(timeout)
-  },[query])
-
-  const { data: doctors, loading, error } = useFetchData(`${BASE_URL}/doctors?query=${debouncequery}`);
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
 
   return (
     <>
@@ -39,16 +42,12 @@ const Doctors = () => {
           <div className="max-w-[570px] mt-[30px] mx-auto bg-[#0066ff2c] rounded-md flex items-center justify-between">
             <input
               type="search"
-              className="py-4 pl-4 pr-2 bg-transparent w-full focus:outline-none
-              cursor-pointer placeholder:text-textColor"
-              placeholder="search Doctor by name or specification  "
+              className="py-4 pl-4 pr-2 bg-transparent w-full focus:outline-none cursor-pointer placeholder:text-textColor"
+              placeholder="search Doctor by name or specification"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-               
             />
-            <button className="btn mt-0 rounded-[0px] rounded-r-md"
-            onClick={handleSearch}>
-
+            <button className="btn mt-0 rounded-[0px] rounded-r-md" onClick={handleSearch}>
               Search
             </button>
           </div>
@@ -61,11 +60,24 @@ const Doctors = () => {
           {error && <Error />}
 
           {!loading && !error && (
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
-              {doctors.map((doctor) => (
-                <Doctorcard key={doctor.id} doctor={doctor} />
-              ))}
-            </div>
+            <>
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
+                {currentDoctors.map((doctor) => (
+                  <Doctorcard key={doctor.id} doctor={doctor} />
+                ))}
+              </div>
+              <div className="flex justify-center mt-4">
+                {Array.from({ length: totalPages }, (_, index) => (
+                  <button
+                    key={index}
+                    onClick={() => handlePageChange(index + 1)}
+                    className={`mx-1 px-3 py-1 border ${currentPage === index + 1 ? "bg-blue-500 text-white" : "bg-white text-blue-500"}`}
+                  >
+                    {index + 1}
+                  </button>
+                ))}
+              </div>
+            </>
           )}
         </div>
       </section>
@@ -73,15 +85,11 @@ const Doctors = () => {
       <section>
         <div className="container">
           <div className="xl:w-[700px] mx-auto">
-            <h2 className="heading lg-text-center lg:ml-[60px]">
-              what our Patients Says
-            </h2>
+            <h2 className="heading lg-text-center lg:ml-[60px]">What Our Patients Say</h2>
             <p className="text__para text-center">
-              world-class care for everyone. Our health System offers unmatched,
-              experts health care.
+              World-class care for everyone. Our health system offers unmatched, expert health care.
             </p>
           </div>
-
           <Testimonials />
         </div>
       </section>
