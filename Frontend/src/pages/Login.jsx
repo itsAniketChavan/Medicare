@@ -13,7 +13,7 @@ const Login = () => {
 
   const recaptcha = useRef();
   const captchKey = import.meta.env.VITE_CAPTCHA_SITE_KEY;
-  console.log(captchKey)
+  
 
   const [formData, setFormData] = useState({
     email: "",
@@ -32,13 +32,13 @@ const Login = () => {
     event.preventDefault();
     setLoading(true);
 
-    const captchaValue = recaptcha.current.getValue()
-    if (!captchaValue) {
-      // alert('Please verify the reCAPTCHA!')
-      toast.error("Please click on captha");
-      setLoading(false);
-      return
-    }
+    // const captchaValue = recaptcha.current.getValue()
+    // if (!captchaValue) {
+    //   
+    //   toast.error("Please click on captha");
+    //   setLoading(false);
+    //   return
+    // }
     try {
       const res = await fetch(`${BASE_URL}/auth/login`, {
         method: "post",
@@ -65,12 +65,23 @@ const Login = () => {
         },
       });
 
-      console.log(result, "login data")
-
+      // console.log(result, "login data")
+      
       setLoading(false);
       toast.success(result.message);
        
-      navigate("/home");
+      if (result.role == "patient"){
+        navigate("/users/profile/me")
+      }
+      else{
+        if (result.role == "admin"){
+          navigate("/admin/profile")
+        }
+        else{
+          navigate("/doctors/profile/me")
+        }
+      }
+      // navigate("/home");
       window.location.reload();
     } catch (err) {
       toast.error(err.message);
@@ -113,7 +124,7 @@ const Login = () => {
               required
             />
           </div>
-          <ReCAPTCHA ref={recaptcha} sitekey={captchKey} />
+          {/* <ReCAPTCHA ref={recaptcha} sitekey={captchKey} /> */}
 
           <div className="mt-7">
             <button

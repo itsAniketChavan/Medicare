@@ -175,3 +175,29 @@ export const getMyAppointments = async (req, res) => {
 
 
  
+
+export const deleteAppointment = async (req, res) => {
+  const doctorId   = req.params.id; // Assuming you're passing doctorId as a URL parameter
+
+  try {
+    const result = await Booking.findOneAndDelete({ user: req.userId, doctor: doctorId });
+
+    if (!result) {
+      return res.status(404).json({
+        success: false,
+        message: "Appointment not found",
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      message: "Appointment deleted successfully",
+    });
+  } catch (err) {
+    return res.status(500).json({
+      success: false,
+      message: "Something went wrong, cannot delete appointment",
+      err,
+    });
+  }
+};
