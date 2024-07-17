@@ -18,19 +18,20 @@ const Signup = () => {
     name: "",
     email: "",
     password: "",
-    photo: selectedFile,
+    photo: defaulat,
     gender: "",
     role: "patient",
   });
 
   const handleInputChange = async(e) => {
+     
     setFormData({ ...formData, [e.target.name]: e.target.value });
  
   };
 
   const handleFileInputChange = async (event) => {
     const file = event.target.files[0];
-
+     
     const data = await uploadImageToCloudinary(file);
 
     setPreviewURl(data.url);
