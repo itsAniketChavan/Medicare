@@ -3,6 +3,7 @@ import { useContext } from "react";
 import { authContext } from "../../context/AuthContext";
 import Approve from "./Approve";
 import AllDoctors from "./AllDoctors";
+import Allusers from "./Allusers";
 import useGetProfile from "../../hooks/useFetchData";
 import { BASE_URL } from "../../config";
 import Loading from "../../components/Loader/Loading";
@@ -99,10 +100,22 @@ const Profile = () => {
                       >
                         Docotrs
                       </button>
+
+                      <button
+                        onClick={() => setTab("Users")}
+                        className={`p-2 py-2 mr-5 rounded-md text-headingColor font-semibold text-[16px] leading-7 border border-solid border-primaryColor${
+                          tab === "Users"
+                            ? " bg-primaryColor text-white font-normal"
+                            : ""
+                        }`}
+                      >
+                        Users
+                      </button>
                     </div>
 
                     {tab == "approvals" && <Approve />}
                     {tab == "Doctors" && <AllDoctors />}
+                    {tab == "Users" && <Allusers />}
                   </div>
                 
                 </div>

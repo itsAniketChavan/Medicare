@@ -79,6 +79,32 @@ export const getAlldoctors = async (req, res) => {
   }
 };
 
+export const getAllUsers = async (req, res) => {
+  try {
+    // Find all users where role is not 'admin'
+    const users = await User.find({ role: { $ne: 'admin' } });
+
+    // Check if there are no users
+    if (users.length === 0) {
+      return res
+        .status(200)
+        .json({ success: false, message: "No users found" });
+    }
+
+    // Respond with the list of users
+    res.status(200).json({
+      success: true,
+      message: "Users retrieved successfully",
+      data: users,
+    });
+  } catch (err) {
+    console.error("Error in getAllUsers:", err);
+    return res
+      .status(500)
+      .json({ success: false, message: "Something went wrong, cannot retrieve users" });
+  }
+};
+
 
 export const updateStatus = async (req, res) => {
   const doctorId   = req.params.id;
@@ -139,6 +165,36 @@ export const deleteDoctor = async (req, res) => {
     return res.status(500).json({
       success: false,
       message: "Something went wrong, cannot delete doctor record"
+    });
+  }
+};
+
+
+export const deleteUser = async (req, res) => {
+  const userId = req.params.id;
+
+  try {
+    // Find and delete the user by ID
+    const user = await User.findByIdAndDelete(userId);
+
+    // If user not found, return a 404 response
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: "User not found"
+      });
+    }
+
+    // Return the successful response
+    res.status(200).json({
+      success: true,
+      message: "User deleted successfully"
+    });
+  } catch (err) {
+    console.error("Error in deleteUser:", err);
+    return res.status(500).json({
+      success: false,
+      message: "Something went wrong, cannot delete user record"
     });
   }
 };

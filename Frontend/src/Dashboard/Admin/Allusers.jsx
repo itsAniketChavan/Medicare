@@ -5,21 +5,18 @@ import Error from "../../components/Error/Error";
 import { BASE_URL, token } from "../../config";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
-import { Navigate, useNavigate } from 'react-router-dom';
-import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
  
 
 
-const AllDoctors = () => {
+const Allusers = () => {
   const [userData, setUserData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [deleting, setDeleting] = useState(null);
-  const navigate = useNavigate();
 
   const fetchUserData = async () => {
     try {
-      const res = await fetch(`${BASE_URL}/admin/all/doctors`, {
+      const res = await fetch(`${BASE_URL}/admin/all/users`, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
@@ -44,24 +41,24 @@ const AllDoctors = () => {
     fetchUserData();
   }, []);
 
-  const handleDelete = async (doctorID) => {
-    setDeleting(doctorID);
+  const handleDelete = async (userID) => {
+    setDeleting(userID);
     try {
-      const response = await fetch(`${BASE_URL}/admin/doctor/${doctorID}`, {
+      const response = await fetch(`${BASE_URL}/admin/users/${userID}`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
       });
-
+  
       if (!response.ok) {
         const errorResult = await response.json();
         throw new Error(errorResult.message);
       }
-
+  
       const result = await response.json();
-
+  
       toast.success(result.message);
       setTimeout(() => {
         fetchUserData();
@@ -73,12 +70,7 @@ const AllDoctors = () => {
       setDeleting(null);
     }
   };
-
-
-  const doctorDetails = (doctorID) =>{
-
-    navigate(`/doctors/${doctorID}`)
-  }
+  
 
   const renderTableRows = () => {
     return userData.map((user) => (
@@ -97,22 +89,10 @@ const AllDoctors = () => {
           </div>
         </th>
         <td className="px-6 py-4 ">{user.gender}</td>
-        <td className="px-6 py-4 ">{user.ticketPrice}</td>
+        {/* <td className="px-6 py-4 ">{user.ticketPrice}</td> */}
         <td className="px-6 py-4 ">{user.email}</td>
-      
-      <FontAwesomeIcon
-        icon={faArrowRight}
-        className="px-8 py-4 text-xl text-blue-500 hover:text-blue-700 cursor-pointer"
-        onClick={() => {
-          doctorDetails(user._id)
-        }}
-      />
-  
         <td className="px-6 py-4 ">
-          
-        
   <div className="group relative flex items-center justify-center">
- 
     <FontAwesomeIcon
       className="text-xl text-blue-500 hover:text-blue-700 cursor-pointer"
       icon={faTrash}
@@ -124,7 +104,7 @@ const AllDoctors = () => {
       </span>
     ) : (
       <span className="absolute left-1/2 transform -translate-x-1/2 bottom-full mb-2 hidden group-hover:block bg-gray-800 text-white text-xs rounded py-1 px-2 whitespace-nowrap">
-        Delete doctor
+        Delete User
       </span>
     )}
   </div>
@@ -145,16 +125,10 @@ const AllDoctors = () => {
             <th scope="col" className="px-6 py-3">
               Gender
             </th>
-            <th scope="col" className="px-6 py-3">
-              Price
-            </th>
+            
             <th scope="col" className="px-6 py-3">
               Email
             </th>
-            <th scope="col" className="px-6 py-3">
-              About
-            </th>
- 
             <th scope="col" className="px-6 py-3">
               Remove
             </th>
@@ -166,7 +140,7 @@ const AllDoctors = () => {
           ) : (
             <tr>
               <td colSpan="5" className="px-6 py-4 text-center">
-                No Doctors found
+                No Users Found
               </td>
             </tr>
           )}
@@ -181,4 +155,4 @@ const AllDoctors = () => {
   return renderTable();
 };
 
-export default AllDoctors;
+export default Allusers;
