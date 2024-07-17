@@ -17,11 +17,14 @@ import ServiceList from "../../src/components/Services/ServicesList";
 import DoctorList from "../components/Doctors/DoctorList";
 import FaqList from "../components/faq/FaqList";
 import Testimonials from "../components/Testimonial/Testimonials";
+import SlidingPage from "./SlidingPage";
 
 const Home = () => {
   return (
     //  ------Hero Section----
     <>
+    <SlidingPage/>
+
       <section className="hero__section pt-[60px] 2xl:h-[800px]">
         <div className="container">
           <div className="flex flex-col lg:flex-row gap-[90px] items-center justify-between">
