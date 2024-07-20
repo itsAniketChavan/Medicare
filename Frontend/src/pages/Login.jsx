@@ -32,13 +32,13 @@ const Login = () => {
     event.preventDefault();
     setLoading(true);
 
-    const captchaValue = recaptcha.current.getValue()
-    if (!captchaValue) {
-      
-      toast.error("Please click on captha");
-      setLoading(false);
-      return
-    }
+    // const captchaValue = recaptcha.current.getValue()
+    // if (!captchaValue) {
+    //   
+    //   toast.error("Please click on captha");
+    //   setLoading(false);
+    //   return
+    // }
     try {
       const res = await fetch(`${BASE_URL}/auth/login`, {
         method: "post",

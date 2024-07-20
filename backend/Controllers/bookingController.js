@@ -17,6 +17,7 @@ export const getCheckoutSession = async (req, res) => {
       success_url: `https://medicare-fronted.vercel.app/checkout-success`,
       cancel_url: `${req.protocol}://${req.get('host')}/doctors/${doctor.id}`,
       customer_email:user.email, 
+       
       client_reference_id:req.params.doctorId,
       line_items: [
         {

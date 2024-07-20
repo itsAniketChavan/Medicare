@@ -7,10 +7,12 @@ import useGetProfile from "../../hooks/useFetchData";
 import { BASE_URL } from "../../config";
 import Loading from "../../components/Loader/Loading";
 import Error from "../../components/Error/Error";
+import { useNavigate } from "react-router-dom";
 
 const MyAccount = () => {
   const { dispatch } = useContext(authContext);
   const [tab, setTab] = useState("bookings");
+  const navigate = useNavigate()
 
   const {
     data: userData,
@@ -18,9 +20,12 @@ const MyAccount = () => {
     error,
   } = useGetProfile(`${BASE_URL}/users/profile/me`);
 
+  // console.log(localStorage.getItem('token'))
   const handleLogout = () => {
     dispatch({ type: "LOGOUT" });
+    // navigate("/login")
     window.location.reload();
+   
   };
   const deleteAccountHandler = async () => {};
 

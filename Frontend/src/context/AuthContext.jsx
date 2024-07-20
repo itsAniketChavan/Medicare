@@ -6,6 +6,8 @@ const initialState = {
   token: localStorage.getItem('token') || null,  // Corrected: Token should be set to 'token'
 };
 
+ 
+
 
 export const authContext = createContext(initialState);
 
@@ -26,6 +28,7 @@ const authReducer = (state, action) => {
          
       };
     case "LOGOUT": {
+      localStorage.clear();
       return {
         user: null,
         role: null,
@@ -61,3 +64,4 @@ export const AuthContextProvider = ({ children }) => {
   )
   
 };
+ 
